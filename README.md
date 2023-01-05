@@ -9,7 +9,16 @@
 Explore US bikeshare data
 
 ### Description
-Describe what your project is about and what it does
+
+explores US bikeshare data for Chicago, Washington or New York City
+asks user to specify city, month, and day to analyze
+checks input
+loads data for specified city and filters by month and day if applicable
+Displays statistics on the most frequent times of travel
+Displays statistics on the most popular stations and trip
+Displays statistics on the total and average trip duration
+Displays statistics on bikeshare users
+Displays raw data if required
 
 ### Files used
 Include the files used

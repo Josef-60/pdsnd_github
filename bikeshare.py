@@ -6,7 +6,7 @@ CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
 months = ['all','january', 'february', 'march', 'april', 'may', 'june']
-
+days = ['all','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday']
 
 def check_data_entry(prompt, valid_entries):
     """
@@ -44,13 +44,11 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!')
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    city = ''
-    while city not in CITY_DATA:
-        city = input("Would you like to see data for Chicago, New York City or Washington ? ").lower()
-    method =''
-    month =''
-    day =''
+    valid_cities = CITY_DATA.keys()
+    prompt_cities = 'Please choose one of the 3 cities (chicago, new york city, washington): '
+    city = check_data_entry(prompt_cities,valid_cities)
     # Select filter method (month, day or raw data)
+    method =''
     while method not in ['month', 'day', 'none']:
         method = input("Would you like to filter the data by month, day, or not at all (-> enter \'none\') ? ")
 
@@ -58,15 +56,15 @@ def get_filters():
         case 'month':
             # TO DO: get user input for month (all, january, february, ... , june)
 
-            month = ''
-            while month not in months:
-                month = input("Which month do you want to see - january, february, march, april, may, june or all ? ").lower()
+            valid_months = ['all','january','february','march','april','may','june']
+            prompt_month = 'Please choose a month (all, january, february, ... , june): '
+            month = check_data_entry(prompt_month,valid_months)
         case 'day':
 
             # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
-            while day not in ['all','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday']:
-                day = input("Which day - Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday or all? ").title()
-
+            valid_days = ['all','monday','tuesday','wednesday','thursday','friday','saturday', 'sunday']
+            prompt_day = 'Please choose a day (all, monday, tuesday, ... sunday): '
+            day = check_data_entry(prompt_day,valid_days)
 
 
 

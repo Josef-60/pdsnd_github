@@ -108,21 +108,16 @@ def time_stats(df):
     start_time = time.time()
 
     # TO DO: display the most common month
-    if not df.empty:
+        if not df.empty:
         most_common_month = df['month'].mode()[0]
         print("Most common month = {}".format(most_common_month))
-    else:
-        print("Dataframe is empty")
 
     # TO DO: display the most common day of week
-    if not df.empty:
         most_common_day = df['day_of_week'].mode()[0]
         print("Most common day = {}".format(most_common_day))
-    else:
-        print("Dataframe is empty")
 
     # TO DO: display the most common start hour
-    if not df.empty:
+
         most_common_hour = df['hour'].mode()[0]
         print("Most common hour = {}".format(most_common_hour))
     else:

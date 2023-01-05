@@ -6,6 +6,32 @@ CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
 months = ['all','january', 'february', 'march', 'april', 'may', 'june']
+days = ['all','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday']
+
+def check_data_entry(prompt, valid_entries):
+    """
+    Asks user to type some input and verify if the entry typed is valid.
+    Since we have 3 inputs to ask the user in get_filters(), it is easier to write a function.
+    Args:
+        (str) prompt - message to display to the user
+        (list) valid_entries - list of string that should be accepted
+    Returns:
+        (str) user_input - the user's valid input
+    """
+    try:
+        user_input = str(input(prompt)).lower()
+
+        while user_input not in valid_entries :
+            print('Sorry... it seems like you\'re not typing a correct entry.')
+            print('Let\'s try again!')
+            user_input = str(input(prompt)).lower()
+
+        print('Great! the chosen entry is: {}\n'.format(user_input))
+        return user_input
+
+    except:
+        print('Seems like there is an issue with your input')
+
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -18,13 +44,11 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!')
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    city = ''
-    while city not in CITY_DATA:
-        city = input("Would you like to see data for Chicago, New York City or Washington ? ").lower()
-    method =''
-    month =''
-    day =''
+    valid_cities = CITY_DATA.keys()
+    prompt_cities = 'Please choose one of the 3 cities (chicago, new york city, washington): '
+    city = check_data_entry(prompt_cities,valid_cities)
     # Select filter method (month, day or raw data)
+    method =''
     while method not in ['month', 'day', 'none']:
         method = input("Would you like to filter the data by month, day, or not at all (-> enter \'none\') ? ")
 
@@ -32,15 +56,15 @@ def get_filters():
         case 'month':
             # TO DO: get user input for month (all, january, february, ... , june)
 
-            month = ''
-            while month not in months:
-                month = input("Which month do you want to see - january, february, march, april, may, june or all ? ").lower()
+            valid_months = ['all','january','february','march','april','may','june']
+            prompt_month = 'Please choose a month (all, january, february, ... , june): '
+            month = check_data_entry(prompt_month,valid_months)
         case 'day':
 
             # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
-            while day not in ['all','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday']:
-                day = input("Which day - Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday or all? ").title()
-
+            valid_days = ['all','monday','tuesday','wednesday','thursday','friday','saturday', 'sunday']
+            prompt_day = 'Please choose a day (all, monday, tuesday, ... sunday): '
+            day = check_data_entry(prompt_day,valid_days)
 
 
 
@@ -84,21 +108,16 @@ def time_stats(df):
     start_time = time.time()
 
     # TO DO: display the most common month
-    if not df.empty:
+        if not df.empty:
         most_common_month = df['month'].mode()[0]
         print("Most common month = {}".format(most_common_month))
-    else:
-        print("Dataframe is empty")
 
     # TO DO: display the most common day of week
-    if not df.empty:
         most_common_day = df['day_of_week'].mode()[0]
         print("Most common day = {}".format(most_common_day))
-    else:
-        print("Dataframe is empty")
 
     # TO DO: display the most common start hour
-    if not df.empty:
+
         most_common_hour = df['hour'].mode()[0]
         print("Most common hour = {}".format(most_common_hour))
     else:
@@ -210,6 +229,7 @@ def view_raw_data(df):
 city, month, day = get_filters()
 df = load_data(city, month, day)
 #print(df.head())
+pd.set_option("display.max_columns",200)
 time_stats(df)
 station_stats(df)
 trip_duration_stats(df)
